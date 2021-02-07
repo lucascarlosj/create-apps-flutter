@@ -8,9 +8,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Pega texto do TextFild
   TextEditingController textC = TextEditingController();
   String resultado = "";
 
+// Resetar campos
   void resetfilds() {
     textC.text = "";
     setState(() {
@@ -18,15 +20,15 @@ class _HomeState extends State<Home> {
     });
   }
 
+// Função para fazer a requisição, (Sem nenhuma validação)
   _consultaCep() async {
+    // String que ira guardar a URL
     String cep = textC.text;
-
     String url = "https://viacep.com.br/ws/${cep}/json/";
 
     http.Response response;
-
     response = await http.get(url);
-
+// Strings que guardando os valores do json
     Map<String, dynamic> retorno = json.decode(response.body);
     String cidade = retorno["localidade"];
     String rua = retorno["logradouro"];
@@ -34,7 +36,7 @@ class _HomeState extends State<Home> {
 
     setState(() {
       if (rua == "") {
-        resultado = resultado = "Cidade: ${cidade}";
+        resultado = "Cidade: ${cidade}";
       } else {
         resultado = "Cidade: ${cidade}\nRua: ${rua}\nBairro: ${bairroInf}";
       }
@@ -85,7 +87,7 @@ class _HomeState extends State<Home> {
                 color: Colors.blue,
                 onPressed: _consultaCep,
               ),
-            ),           
+            ),
           ],
         ),
       ),
